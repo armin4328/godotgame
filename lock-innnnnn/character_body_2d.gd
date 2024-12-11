@@ -24,12 +24,13 @@ func _physics_process(delta: float) -> void:
 	# Handle input for left and right movement
 	if Input.is_action_pressed("left") and isAttacking == false:
 		velocity.x -= speed # Change sprite to left texture
-		anim.play("walk_left")
-
+		anim.play("walk_right")
+		$Sprite2D.flip_h = true
 		
 	elif Input.is_action_pressed("right")and isAttacking == false:
 		velocity.x += speed
 		anim.play("walk_right")
+		$Sprite2D.flip_h = false
 
 		
 	else:
@@ -39,7 +40,6 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_pressed("attack"):
 		anim.play("attack_right")
-
 		isAttacking = true
 			
 	# Handle jump
