@@ -6,14 +6,10 @@ extends CharacterBody2D
 # Gravity and Jump force
 @export var gravity: float = 600.0
 @export var jump_force: float = 400.0
+var isAttacking = false
+var facing = "right"
+@onready var anim = $AnimationPlayer
 
-# Reference to the Sprite node
-@onready var sprite = $Sprite2D  # Adjust this to match your Sprite node name
-
-# Textures for left and right movement
-@export var left_texture : Texture2D
-@export var right_texture : Texture2D
-@export var idle_texture : Texture2D  # Optional, for idle state
 
 func _physics_process(delta: float) -> void:
 	# Apply gravity
@@ -26,19 +22,33 @@ func _physics_process(delta: float) -> void:
 	velocity.x = 0
 
 	# Handle input for left and right movement
-	if Input.is_action_pressed("left"):
-		velocity.x -= speed
-		sprite.texture = left_texture  # Change sprite to left texture
-	elif Input.is_action_pressed("right"):
-		velocity.x += speed
-		sprite.texture = right_texture  # Change sprite to right texture
-	else:
-		# Optionally, set to idle texture if no movement
-		sprite.texture = idle_texture
+	if Input.is_action_pressed("left") and isAttacking == false:
+		velocity.x -= speed # Change sprite to left texture
+		anim.play("walk_left")
 
+		
+	elif Input.is_action_pressed("right")and isAttacking == false:
+		velocity.x += speed
+		anim.play("walk_right")
+
+		
+	else:
+		velocity.x = 0
+		if isAttacking == false:
+			anim.play("idle")
+	
+	if Input.is_action_pressed("attack"):
+		anim.play("attack_right")
+
+		isAttacking = true
+			
 	# Handle jump
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = -jump_force
-
-	# Move the player and handle collisions
+	
 	move_and_slide()
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "attack_right":
+		isAttacking = false

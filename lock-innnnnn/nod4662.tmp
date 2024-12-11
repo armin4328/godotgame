@@ -1,9 +1,11 @@
-[gd_scene load_steps=16 format=4 uid="uid://tljstwix0kn"]
+[gd_scene load_steps=10 format=4 uid="uid://tljstwix0kn"]
 
 [ext_resource type="Texture2D" uid="uid://460x1r8lyq13" path="res://basic.png" id="1_4lpip"]
 [ext_resource type="Script" path="res://node_2d.gd" id="1_jymw4"]
 [ext_resource type="Script" path="res://character_body_2d.gd" id="3_1gtds"]
-[ext_resource type="Texture2D" uid="uid://g23ka2og47eo" path="res://cloak_man/cloak_man_sheet.png" id="7_gphe6"]
+[ext_resource type="Texture2D" uid="uid://cjlwafiwm8bkr" path="res://cloak_man/idle.png" id="3_pqjws"]
+[ext_resource type="Texture2D" uid="uid://b7kikvd2doxew" path="res://cloak_man/left.png" id="4_prcxf"]
+[ext_resource type="Texture2D" uid="uid://ch74xijy1d6aq" path="res://cloak_man/right.png" id="5_ddtlq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2bpwp"]
 texture = ExtResource("1_4lpip")
@@ -18,136 +20,8 @@ tile_size = Vector2i(40, 40)
 physics_layer_0/collision_layer = 1
 sources/1 = SubResource("TileSetAtlasSource_2bpwp")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_d3qlt"]
-size = Vector2(65, 78)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wnbmc"]
 size = Vector2(50, 110.5)
-
-[sub_resource type="Animation" id="Animation_46eej"]
-resource_name = "attack_right"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.0333333, 0.166667, 0.3, 0.433333),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [8, 9, 10, 11]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D/Area2D/CollisionShape2D:disabled")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.366667, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [true, false, true]
-}
-
-[sub_resource type="Animation" id="Animation_k1puu"]
-resource_name = "attack_left"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.1, 0.2, 0.3, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [4, 5, 6, 7]
-}
-
-[sub_resource type="Animation" id="Animation_h174y"]
-resource_name = "walk_right"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [2]
-}
-
-[sub_resource type="Animation" id="Animation_ainf2"]
-resource_name = "walk_left"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [1]
-}
-
-[sub_resource type="Animation" id="Animation_hp2x2"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [8]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D/Area2D/CollisionShape2D:disabled")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
-[sub_resource type="Animation" id="Animation_00ncp"]
-resource_name = "idle"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_2suc8"]
-_data = {
-"RESET": SubResource("Animation_hp2x2"),
-"attack_left": SubResource("Animation_k1puu"),
-"attack_right": SubResource("Animation_46eej"),
-"idle": SubResource("Animation_00ncp"),
-"walk_left": SubResource("Animation_ainf2"),
-"walk_right": SubResource("Animation_h174y")
-}
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_jymw4")
@@ -161,27 +35,14 @@ tile_set = SubResource("TileSet_b5bwg")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 script = ExtResource("3_1gtds")
+left_texture = ExtResource("4_prcxf")
+right_texture = ExtResource("5_ddtlq")
+idle_texture = ExtResource("3_pqjws")
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
 texture_filter = 1
-texture = ExtResource("7_gphe6")
-hframes = 4
-vframes = 3
-frame = 8
-
-[node name="Area2D" type="Area2D" parent="CharacterBody2D/Sprite2D"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Sprite2D/Area2D"]
-position = Vector2(57.5, 6)
-shape = SubResource("RectangleShape2D_d3qlt")
-disabled = true
+texture = ExtResource("3_pqjws")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(0, -0.25)
 shape = SubResource("RectangleShape2D_wnbmc")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterBody2D"]
-libraries = {
-"": SubResource("AnimationLibrary_2suc8")
-}
-
-[connection signal="animation_finished" from="CharacterBody2D/AnimationPlayer" to="CharacterBody2D" method="_on_animation_player_animation_finished"]
