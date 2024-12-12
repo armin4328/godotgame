@@ -2,6 +2,8 @@ extends CharacterBody2D
 
 # Movement speed
 @export var speed: float = 200.0
+@export var health = 10
+@export var damage = 3
 
 # Gravity and Jump force
 @export var gravity: float = 600.0
@@ -27,7 +29,7 @@ func _physics_process(delta: float) -> void:
 		anim.play("walk_right")
 		$Sprite2D.flip_h = true
 		
-	elif Input.is_action_pressed("right")and isAttacking == false:
+	elif Input.is_action_pressed("right") and isAttacking == false:
 		velocity.x += speed
 		anim.play("walk_right")
 		$Sprite2D.flip_h = false

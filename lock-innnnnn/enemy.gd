@@ -1,46 +1,54 @@
 extends CharacterBody2D
 
 
-class_name wizardEnemy
+@export var health = 10
+@export var damage = 1
+@export var speed: float = 100.0
+@export var player_path: NodePath
+@export var gravity: float = 200.0
+@onready var anim = $AnimationPlayer
+var isAttacking = false
+var cooldown = 2
 
-const speed = 10
-var is_wizard_chase: bool
+func _ready():
+	pass
 
-var health = 80
-var health_max = 80
-var health_min = 0
+func _physics_process(delta):
+	var player_position = $"../player".global_position
+	var enemy_position = global_position
+	var difference = player_position.x - enemy_position.x
+	
+	if player_position.x > enemy_position.x and isAttacking == false:
+		velocity.x = 100
+		$Sprite2D.flip_h = false
+		anim.play("idle")
+	elif player_position.x < enemy_position.x and isAttacking == false:
+		velocity.x = -100
+		$Sprite2D.flip_h = true
+		anim.play("idle")
+		print("Enemy position", enemy_position)
 
-var dead: bool = false
-var taking_damage: bool = false
-var damage_to_deal = 20
-var is_dealing_damage: bool = false
-
-var dir: Vector2
-const gravity = 900
-var knockback_force = 200
-var is_roaming: bool = true
-
-func _process(delta):
-	if !is_on_floor():
-		velocity.y += gravity * delta
+	else:
 		velocity.x = 0
-	move(delta)
+		if isAttacking == false:
+			anim.play("idle")
+	
+	if abs(difference) < 120 and cooldown <= 0:
+		anim.play("attack")
+		isAttacking = true
+		if cooldown < 0:
+			cooldown = 2
+	cooldown -= delta
+	
+	if not is_on_floor():
+		velocity.y += gravity * delta
+	else:
+		velocity.y = 0.0
+	
+	# Move the enemy using move_and_slide
 	move_and_slide()
 
-func move(delta):
-	if !dead:
-		if !is_wizard_chase:
-			velocity += dir * speed * delta
-		is_roaming = true
-	elif dead:
-		velocity.x = 0
 
-func _on_direction_timer_timeout():
-	$DirectionTimer.wait_time = choose([1.5,2.0,2.5])
-	if !is_wizard_chase:
-		dir = choose([Vector2.RIGHT, Vector2.LEFT])
-		velocity.x = 0
-
-func choose(array):
-	array.shuffle()
-	return array.front()
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "attack":
+		isAttacking = false

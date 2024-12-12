@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=4 uid="uid://tljstwix0kn"]
+[gd_scene load_steps=23 format=4 uid="uid://tljstwix0kn"]
 
 [ext_resource type="Texture2D" uid="uid://460x1r8lyq13" path="res://basic.png" id="1_4lpip"]
 [ext_resource type="Script" path="res://node_2d.gd" id="1_jymw4"]
@@ -212,26 +212,10 @@ tracks/1/keys = {
 "values": [true, false, true]
 }
 
-[sub_resource type="Animation" id="Animation_c8lc6"]
-resource_name = "idle"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tu1x1"]
 _data = {
 "RESET": SubResource("Animation_imwae"),
-"attack": SubResource("Animation_nrf76"),
-"idle": SubResource("Animation_c8lc6")
+"attack": SubResource("Animation_nrf76")
 }
 
 [node name="Node2D" type="Node2D"]
@@ -272,26 +256,28 @@ libraries = {
 }
 
 [node name="enemy" type="CharacterBody2D" parent="."]
-position = Vector2(-289, 122)
 script = ExtResource("5_txbm6")
+speed = null
 player_path = NodePath("../player")
+gravity = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="enemy"]
+position = Vector2(-337, 126)
 shape = SubResource("RectangleShape2D_8704r")
 
 [node name="Sprite2D" type="Sprite2D" parent="enemy"]
 texture_filter = 1
-position = Vector2(10, -1)
+position = Vector2(-328, 123)
 texture = ExtResource("5_he6mi")
 hframes = 4
 vframes = 2
 frame = 4
 
 [node name="Area2D" type="Area2D" parent="enemy/Sprite2D"]
-position = Vector2(79, 15)
+position = Vector2(0, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="enemy/Sprite2D/Area2D"]
-position = Vector2(-20, -10)
+position = Vector2(60, -4)
 shape = SubResource("RectangleShape2D_hnxry")
 disabled = true
 
@@ -301,4 +287,3 @@ libraries = {
 }
 
 [connection signal="animation_finished" from="player/AnimationPlayer" to="player" method="_on_animation_player_animation_finished"]
-[connection signal="animation_finished" from="enemy/AnimationPlayer" to="enemy" method="_on_animation_player_animation_finished"]
